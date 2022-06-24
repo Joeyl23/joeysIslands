@@ -40,7 +40,7 @@ function World(){
 const Stars = () => {
   const count = 500;
 
-  const [positions, sizes] = useMemo(() => {
+  const [positions] = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const sizes = new Float32Array(count * 3);
     for (let i = 0; i < count * 3; i++) {
