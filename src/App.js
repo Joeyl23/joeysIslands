@@ -8,11 +8,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from '@react-three/drei';
 
 import worldgltf from './content/world.gltf'
+import { Camera } from 'three';
 
 var mixer;
 
 
 function World(){
+
   const gltf = useLoader(GLTFLoader, worldgltf);
 
   mixer = new THREE.AnimationMixer(gltf.scene);
@@ -69,6 +71,7 @@ const Stars = () => {
 function App() {
 
   const [time,setTime] = useState('day');
+  const [target,setTarget] = useState([0,0,0]);
 
   function changeTime(){
     if(time==='day'){
@@ -79,6 +82,11 @@ function App() {
       document.body.style.backgroundColor = '#dbe9fb'
     }
   }
+
+  function cameratarget(e){
+    console.log(e);
+    setTarget(e);
+  }
   return (
     <>
 
@@ -87,6 +95,7 @@ function App() {
     <Canvas camera={{position:[-10,10,20]}}>
       
     <OrbitControls
+        target={target}
         enableZoom={true}
         rotateSpeed={2}
       />
@@ -94,7 +103,9 @@ function App() {
       <directionalLight
       position={[0,10,0]}
       />
-      <World />
+      <mesh  onClick={(e) => cameratarget(e.object.position)} >
+      <World/>
+      </mesh>
       <Stars />
     </Canvas>
 
